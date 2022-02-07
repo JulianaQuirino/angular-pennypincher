@@ -1,0 +1,77 @@
+<main>
+    <div class="container-fluid">
+        <h1 class="mt-4">Bem vindo!</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+        <div class="row">
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-primary text-white mb-4">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h5><i class="fas fa-piggy-bank mr-2"></i>Contas</h5>
+                        </div>
+                        <div class="card-subtitle" style="text-align-last: end;">
+                            <h4> {{ numberOfAccounts}} </h4>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-white stretched-link" routerLink="/contas">Detalhes</a>
+                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-warning text-white mb-4">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h5><i class="fas fa-book mr-2"></i>Categorias</h5>
+                        </div>
+                        <div class="card-subtitle" style="text-align-last: end;">
+                            <h4> {{ numberOfCategories }} </h4>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-white stretched-link" routerLink="/categorias">Detalhes</a>
+                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-success text-white mb-4">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h5><i class="fas fa-paperclip mr-2"></i>Projetos</h5>
+                        </div>
+                        <div class="card-subtitle" style="text-align-last: end;">
+                            <h4> {{ numberOfProjects }} </h4>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-white stretched-link" routerLink="/projetos">Detalhes</a>
+                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-danger text-white mb-4">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h5><i class="fas fa-tasks mr-2"></i>Lançamentos</h5>
+                        </div>
+                        <div class="card-subtitle" style="text-align-last: end;">
+                            <h4> {{ numberOfRecords }} </h4>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-white stretched-link" routerLink="/lancamentos">Detalhes</a>
+                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

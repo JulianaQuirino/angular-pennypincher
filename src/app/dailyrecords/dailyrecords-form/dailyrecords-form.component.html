@@ -1,0 +1,215 @@
+<h1 class="mt-4">Lançamentos</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">{{ dailyRecord.id ? 'Edição' : 'Cadastro' }}</li>
+</ol>
+<div class="container">
+
+    <form #dailyRecordForm="ngForm" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert" *ngIf="success == true">
+                    Lançamento salvo/atualizado com sucesso!
+                </div>
+                <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                    {{ erro }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2" *ngIf="dailyRecord.id">
+                <div class="form-group">
+                    <label>ID:</label>
+                    <input type="text" class="form-control" disabled="true" name="id" [ngModel]="dailyRecord.id" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Data: *</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                        </div>
+                        <input type="text" class="form-control" name="name" [(ngModel)]="dailyRecord.date"
+                            *ngIf="!dailyRecord.id" />
+                            <label class="form-control" *ngIf="dailyRecord.id">{{dailyRecord.date}}</label>
+                    
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-1">
+                <button class="btn btn-app bg-warning" type='button' (click)="prepareToAddRecord()">
+                    <i class="fas fa-plus"></i> Adicionar lançamento
+                </button>
+            </div>
+        </div>
+    </form>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Conta</th>
+                            <th>Tipo</th>
+                            <th>Categoria</th>
+                            <th>Subcategoria</th>
+                            <th>Descrição</th>
+                            <th>Valor</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor='let record of records'>
+                            <td>{{ record.id }}</td>
+                            <td>{{ record.accountName }}</td>
+                            <td>{{ record.categoryType }}</td>
+                            <td>{{ record.categoryName }}</td>
+                            <td>{{ record.subcategoryName }}</td>
+                            <td>{{ record.description }}</td>
+                            <td [ngClass]="{fontRed: record.categoryType === 'D', fontGreen: record.categoryType === 'C'}">{{ record.value | currency:'BRL':true }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-primary" (click)="editRecord(record.id)">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+    
+                                    <button class="btn btn-danger" (click)="prepareToDeleteRecord(record.id)"
+                                        data-toggle="modal" data-target="#deleteModal">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        <br />
+        <div class="row">
+            <div class="form-group col-md-4">
+
+                <button type="button" class="btn btn-danger ml-1" (click)="backtoList()">
+                    <i class="fa fa-arrow-alt-circle-left"></i>Voltar
+                </button>
+            </div>
+        </div>
+
+        <div id="recordModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Adicionar lançamento</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>Conta: *</label>
+                                <select class="form-control" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="record.accountId">
+                                    <option value="">Selecione...</option>
+                                    <option *ngFor="let account of accounts" [ngValue]="account.id">
+                                        {{ account.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>Tipo: *</label>
+                                <select class="form-control" name="categoryType" [(ngModel)]="selectedType"
+                                    (ngModelChange)="changeCategories($event)">
+                                    <option value="D">Débito</option>
+                                    <option value="C">Crédito</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>Categoria: *</label>
+                                <select class="form-control" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="record.categoryId" (ngModelChange)="changeSubcategories($event)">
+                                    <option value="">Selecione...</option>
+                                    <option *ngFor="let category of categories" [ngValue]="category.id">
+                                        {{ category.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>Subcategoria:</label>
+                                <select class="form-control" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="record.subcategoryId">
+                                    <option value="">Selecione...</option>
+                                    <option *ngFor="let subcategory of subcategories" [ngValue]="subcategory.id">
+                                        {{ subcategory.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>Valor: *</label>
+                                <input type="text" class="form-control" name="value" [(ngModel)]="record.value" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>Descrição:</label>
+                                <input type="text" class="form-control" name="description"
+                                    [(ngModel)]="record.description" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>Projeto:</label>
+                                <select class="form-control" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="record.projectId">
+                                    <option value="">Selecione...</option>
+                                    <option *ngFor="let project of projects" [ngValue]="project.id">
+                                        {{ project.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-success" (click)="saveRecord()" data-dismiss="modal">Salvar</button>
+                        <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="deleteModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Confirmação</h4>
+                    </div>
+    
+                    <div class="modal-body" *ngIf="selectedRecord">
+                        Confirma a deleção do lançamento {{ selectedRecord.description }}?
+                    </div>
+    
+                    <div class="modal-footer">
+                        <button class="btn btn-success" (click)="deleteRecord()" data-dismiss="modal">Confirmar</button>
+                        <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>

@@ -1,0 +1,69 @@
+<h1 class="mt-4">Projetos</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">{{ project.id ? 'Edição' : 'Cadastro' }}</li>
+</ol>
+<div class="container">
+
+    <form #projectForm="ngForm" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert" *ngIf="success == true">
+                    Projeto salvo/atualizado com sucesso!
+                </div>
+                <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                    {{ erro }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6" *ngIf="project.id">
+                <div class="form-group">
+                    <label>ID:</label>
+                    <input type="text" class="form-control" disabled="true" 
+                    name="id" [ngModel]="project.id" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Nome: *</label>
+                    <input type="text" class="form-control" 
+                        name="name" [(ngModel)]="project.name"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Descrição: </label>
+                    <input type="text" class="form-control" 
+                        name="description" [(ngModel)]="project.description"/>
+                </div>
+            </div>
+        </div>
+   
+        <div class="row">
+            <div class="form-group col-md-6">
+                <button type="submit" class="btn btn-success" *ngIf="!project.id">
+                    <i class="fa fa-save"></i>Salvar
+                </button>
+
+                <button type="submit" class="btn btn-primary" *ngIf="project.id">
+                    <i class="fa fa-sync-alt"></i>Atualizar
+                </button>
+
+                <button type="button" class="btn btn-danger ml-1" (click)="backtoList()">
+                    <i class="fa fa-arrow-alt-circle-left"></i>Voltar
+                </button>
+            </div>
+        </div>
+
+
+    </form>
+
+</div>

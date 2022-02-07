@@ -1,0 +1,84 @@
+<h1 class="mt-4">Contas</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Consulta</li>
+</ol>
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert" *ngIf="successMessage">
+                {{ successMessage }}
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+                {{ errorMessage }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <button class="btn btn-warning" (click)="new()">
+                <i class="fa fa-plus"></i>Novo
+            </button>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let account of accounts'>
+                        <td>{{ account.id }}</td>
+                        <td>{{ account.name }}</td>
+                        <td>{{ account.description }}</td>
+                        <td>
+                            <div class="btn-group">
+                            <button class="btn btn-primary"
+                                routerLink="/contas/form/{{ account.id }}">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                        
+                            <button class="btn btn-danger" (click)="prepareToDelete(account)"
+                                data-toggle="modal" data-target="#deleteModal">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+    <div id="deleteModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Confirmação</h4>
+                </div>
+
+                <div class="modal-body" *ngIf="selectedAccount">
+                    Confirma a deleção da conta {{ selectedAccount.name }}?
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-success" (click)="deleteAccount()" data-dismiss="modal">Confirmar</button>
+                    <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

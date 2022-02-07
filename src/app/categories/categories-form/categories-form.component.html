@@ -1,0 +1,72 @@
+<h1 class="mt-4">Categorias</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">{{ category.id ? 'Edição' : 'Cadastro' }}</li>
+</ol>
+<div class="container">
+
+    <form #categoryForm="ngForm" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert" *ngIf="success == true">
+                    Categoria salva/atualizada com sucesso!
+                </div>
+                <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                    {{ erro }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6" *ngIf="category.id">
+                <div class="form-group">
+                    <label>ID:</label>
+                    <input type="text" class="form-control" disabled="true" 
+                    name="id" [ngModel]="category.id" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Nome: *</label>
+                    <input type="text" class="form-control" 
+                        name="name" [(ngModel)]="category.name"/>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Tipo: *</label>
+                    <select class="form-control" 
+                        name="categoryType" [(ngModel)]="category.categoryType">
+                        <option value="D">Débito</option>
+                        <option value="C">Crédito</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+   
+        <div class="row">
+            <div class="form-group col-md-6">
+                <button type="submit" class="btn btn-success" *ngIf="!category.id">
+                    <i class="fa fa-save"></i>Salvar
+                </button>
+
+                <button type="submit" class="btn btn-primary" *ngIf="category.id">
+                    <i class="fa fa-sync-alt"></i>Atualizar
+                </button>
+
+                <button type="button" class="btn btn-danger ml-1" (click)="backtoList()">
+                    <i class="fa fa-arrow-alt-circle-left"></i>Voltar
+                </button>
+            </div>
+        </div>
+
+
+    </form>
+
+</div>

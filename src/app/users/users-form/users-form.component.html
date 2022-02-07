@@ -1,0 +1,91 @@
+<h1 class="mt-4">Usuários</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">{{ user.id ? 'Edição' : 'Cadastro' }}</li>
+</ol>
+<div class="container">
+
+    <form #userForm="ngForm" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert" *ngIf="success == true">
+                    Usuário salvo/atualizado com sucesso!
+                </div>
+                <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                    {{ erro }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6" *ngIf="user.id">
+                <div class="form-group">
+                    <label>ID:</label>
+                    <input type="text" class="form-control" disabled="true" name="id" [ngModel]="user.id" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label>Login</label>
+                <input type="text" name="username" [(ngModel)]="user.username" autocomplete="off"
+                    class="form-control py-4" [disabled]="user.id != null">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label>Nome completo: *</label>
+                <input type="text" class="form-control" name="name" [(ngModel)]="user.name" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label>Telefone</label>
+                <input type="text" name="phone" [(ngModel)]="user.phone" class="form-control py-4" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label>Email</label>
+                <input type="text" name="email" [(ngModel)]="user.email" class="form-control py-4" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label>Senha</label>
+                <input type="password" name="password" [(ngModel)]="user.password" class="form-control py-4" />
+            </div>
+        </div>
+
+        <br/>
+        <div class="form-check mb-3">
+            <input type="checkbox" id="checkAdmin" name="admin" [(ngModel)]="user.admin" class="form-check-input">
+            <label class="form-check-label" for="checkAdmin">Administrador</label>
+        </div>
+        <br/>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <button type="submit" class="btn btn-success" *ngIf="!user.id">
+                    <i class="fa fa-save"></i>Salvar
+                </button>
+
+                <button type="submit" class="btn btn-primary" *ngIf="user.id">
+                    <i class="fa fa-sync-alt"></i>Atualizar
+                </button>
+
+                <button type="button" class="btn btn-danger ml-1" (click)="backtoList()">
+                    <i class="fa fa-arrow-alt-circle-left"></i>Voltar
+                </button>
+            </div>
+        </div>
+
+
+    </form>
+
+</div>
