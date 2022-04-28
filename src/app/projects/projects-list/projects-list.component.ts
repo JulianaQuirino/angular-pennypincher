@@ -3,6 +3,8 @@ import { Router} from '@angular/router';
 
 import { Project } from '../project';
 import { ProjectsService } from 'src/app/shared/services/projects.service';
+import { DownloadPDFService } from 'src/app/shared/services/download-pdf.service';
+import { DownloadExcelService } from 'src/app/shared/services/download-excel.service';
 
 @Component({
   selector: 'app-projects-list',
@@ -15,10 +17,11 @@ export class ProjectsListComponent implements OnInit {
   selectedProject : Project;
   successMessage: string;
   errorMessage: string;
+  reportMode : boolean = false;
 
 
-  constructor(private service : ProjectsService, 
-    private router: Router) { }
+  constructor(private service : ProjectsService, private downloadPDFService: DownloadPDFService,
+    private downloadExcelService: DownloadExcelService, private router: Router) { }
 
   new(){
     this.router.navigate(['/projetos/form']);
@@ -45,7 +48,22 @@ export class ProjectsListComponent implements OnInit {
       )
   }
 
+  public exportExcel(){
+    let header=["ID","Nome", "Descrição"];
+    this.downloadExcelService.exportExcel(this.projects, header, "Projetos", 3);
+  }
 
+  public printReports() {
+    this.reportMode = true; 
+  }
+
+  public allOptions() {
+    this.reportMode = false; 
+  }
+
+  public exportToPDF(elementId: string, fileName: string){
+    this.downloadPDFService.exportToPDF(elementId, fileName);
+  }
 
 }
 

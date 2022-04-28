@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router} from '@angular/router';
 
-import { Subcategory } from '../subcategories';
 import { SubcategoriesService } from 'src/app/shared/services/subcategories.service';
+import { DownloadPDFService } from 'src/app/shared/services/download-pdf.service';
+import { DownloadExcelService } from 'src/app/shared/services/download-excel.service';
+
 import { SubcategoryItem } from '../subcategoriesItem';
 
 @Component({
@@ -16,10 +18,11 @@ export class SubcategoriesListComponent implements OnInit {
   selectedSubcategory : SubcategoryItem;
   successMessage: string;
   errorMessage: string;
+  reportMode : boolean = false;
 
 
-  constructor(private service : SubcategoriesService, 
-    private router: Router) { }
+  constructor(private service : SubcategoriesService, private downloadPDFService: DownloadPDFService,
+    private downloadExcelService: DownloadExcelService, private router: Router) { }
 
   new(){
     this.router.navigate(['/subcategorias/form']);
@@ -46,6 +49,21 @@ export class SubcategoriesListComponent implements OnInit {
       )
   }
 
+  public exportExcel(){
+    let header=["ID","Nome", "Categoria"];
+    this.downloadExcelService.exportExcel(this.subcategoryItens, header, "Subcategorias", 3);
+  }
 
+  public printReports() {
+    this.reportMode = true; 
+  }
+
+  public allOptions() {
+    this.reportMode = false; 
+  }
+
+  public exportToPDF(elementId: string, fileName: string){
+    this.downloadPDFService.exportToPDF(elementId, fileName);
+  }
 
 }

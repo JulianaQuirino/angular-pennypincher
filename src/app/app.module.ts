@@ -27,6 +27,8 @@ import { ProjectsFormComponent } from './projects/projects-form/projects-form.co
 import { ProjectsListComponent } from './projects/projects-list/projects-list.component';
 import { DailyrecordsListComponent } from './dailyrecords/dailyrecords-list/dailyrecords-list.component';
 import { DailyrecordsFormComponent } from './dailyrecords/dailyrecords-form/dailyrecords-form.component';
+import { LimitsFormComponent } from './limits/limits-form/limits-form.component';
+import { LimitsListComponent } from './limits/limits-list/limits-list.component';
 import { UsersListComponent } from './users/users-list/users-list.component';
 import { UsersFormComponent } from './users/users-form/users-form.component';
 import { AuthGuard } from './auth.guard';
@@ -51,7 +53,9 @@ registerLocaleData(localePt, 'pt');
     DailyrecordsListComponent,
     DailyrecordsFormComponent,
     UsersListComponent,
-    UsersFormComponent
+    UsersFormComponent,
+    LimitsFormComponent,
+    LimitsListComponent
   ],
   imports: [
     BrowserModule,

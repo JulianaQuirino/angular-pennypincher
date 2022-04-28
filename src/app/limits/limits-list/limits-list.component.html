@@ -1,6 +1,6 @@
-<div class="container" id="subcategories-list-pdf">
+<div class="container" id="limits-list-pdf">
 
-    <h1 class="mt-4">Subcategorias</h1>
+    <h1 class="mt-4">Limites</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active" *ngIf="!reportMode">Consulta</li>
     </ol>
@@ -39,7 +39,7 @@
                 </button>
 
                 <button class="btn btn-danger" id="exportPDF" [ngClass]="{'no' : !reportMode, '' : reportMode}" 
-                    (click)="exportToPDF('subcategories-list-pdf', 'Subcategorias')" title="Download relatório em PDF">
+                    (click)="exportToPDF('limits-list-pdf', 'Limites')" title="Download relatório em PDF">
                     <i class="fa fa-solid fa-file-pdf"></i>
                 </button>
 
@@ -54,24 +54,28 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nome</th>
                         <th>Categoria</th>
+                        <th>Mês</th>
+                        <th>Ano</th>
+                        <th>Valor</th>
                         <th *ngIf="!reportMode"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor='let subcategory of subcategoryItens'>
-                        <td>{{ subcategory.id }}</td>
-                        <td>{{ subcategory.name }}</td>
-                        <td>{{ subcategory.categoryName }}</td>
+                    <tr *ngFor='let limit of limits'>
+                        <td>{{ limit.id }}</td>
+                        <td>{{ limit.categoryName }}</td>
+                        <td>{{ limit.month }}</td>
+                        <td>{{ limit.year }}</td>
+                        <td>{{ limit.maxValue }}</td>
                         <td *ngIf="!reportMode">
                             <div class="btn-group">
-                                <button class="btn btn-primary" routerLink="/subcategorias/form/{{ subcategory.id }}">
+                                <button class="btn btn-primary" routerLink="/limites/form/{{ limit.id }}">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
 
-                                <button class="btn btn-danger" (click)="prepareToDelete(subcategory)"
-                                    data-toggle="modal" data-target="#deleteModal">
+                                <button class="btn btn-danger" (click)="prepareToDelete(limit)" data-toggle="modal"
+                                    data-target="#deleteModal">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -91,13 +95,12 @@
                     <h4>Confirmação</h4>
                 </div>
 
-                <div class="modal-body" *ngIf="selectedSubcategory">
-                    Confirma a deleção da subcategoria {{ selectedSubcategory.name }}?
+                <div class="modal-body" *ngIf="selectedLimit">
+                    Confirma a deleção do limite da categoria {{ selectedLimit.categoryName }}?
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-success" (click)="deleteSubcategory()"
-                        data-dismiss="modal">Confirmar</button>
+                    <button class="btn btn-success" (click)="deleteLimit()" data-dismiss="modal">Confirmar</button>
                     <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>

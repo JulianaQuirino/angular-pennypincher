@@ -17,24 +17,26 @@ export class UsersFormComponent implements OnInit {
   errors: String[];
   id: number;
 
-  constructor(private service: AuthService, 
+  constructor(private service: AuthService,
     private router: Router,
     private activatedRoute: ActivatedRoute) {
     this.user = new User();
   }
 
   ngOnInit(): void {
-    let params : Observable<Params> = this.activatedRoute.params;
+    let params: Observable<Params> = this.activatedRoute.params;
     this.user = new User();
-    params.subscribe( urlParams =>{
+    params.subscribe(urlParams => {
       this.id = urlParams['id'];
       console.log(this.id);
-      if (this.id){
+      if (this.id) {
         this.service
           .getUserById(this.id)
-          .subscribe (
-            response => {this.user = response,
-            console.log(this.user)},
+          .subscribe(
+            response => {
+              this.user = response,
+              console.log(this.user)
+            },
             errorResponse => this.user = new User()
           )
       }
@@ -49,8 +51,9 @@ export class UsersFormComponent implements OnInit {
     if (this.id) {
       this.service
         .update(this.user)
-        .subscribe (response =>{
+        .subscribe(response => {
           this.success = true;
+          this.user = response;
           this.errors = [];
         }, errorResponse => {
           this.errors = ['Erro ao atualizar o usuário.']

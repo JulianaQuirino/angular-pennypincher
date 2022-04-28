@@ -1,8 +1,39 @@
-<h1 class="mt-4">Lançamentos</h1>
-<ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item active">{{ dailyRecord.id ? 'Edição' : 'Cadastro' }}</li>
-</ol>
-<div class="container">
+<div class="container" id="dailyrecords-form-pdf">
+
+    <h1 class="mt-4">Lançamentos</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active" *ngIf="!reportMode">{{ dailyRecord.id ? 'Edição' : 'Cadastro' }}</li>
+    </ol>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="btn-group">
+
+                <button type="button" class="btn btn-success" id="reports" [ngClass]="{'no' : reportMode, '' : !reportMode}" 
+                    (click)="printReports()" title="Imprimir relatórios">
+                    <i class="fa fa-solid fa-file-download"></i>
+                </button>
+
+                <button type="button" class="btn btn-warning" id="back" [ngClass]="{'no' : !reportMode, '' : reportMode}" 
+                    (click)="allOptions()" title="Voltar">
+                    <i class="fa fa-solid fa-backward"></i>
+                </button>
+
+                <button type="button" class="btn btn-success" id="exportExcel" [ngClass]="{'no' : !reportMode, '' : reportMode}" 
+                    (click)="exportExcel()" title="Download relatório em Excel">
+                    <i class="fa fa-solid fa-file-excel"></i>
+                </button>
+
+                <button type="button" class="btn btn-danger" id="exportPDF" [ngClass]="{'no' : !reportMode, '' : reportMode}" 
+                    (click)="exportToPDF('dailyrecords-form-pdf', 'Lançamentos_' + dailyRecord.date)" title="Download relatório em PDF">
+                    <i class="fa fa-solid fa-file-pdf"></i>
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+    <br/>
 
     <form #dailyRecordForm="ngForm" (ngSubmit)="onSubmit()">
 
@@ -40,10 +71,14 @@
             </div>
 
             <div class="col-sm-1">
-                <button class="btn btn-app bg-warning" type='button' (click)="prepareToAddRecord()">
+                <button class="btn btn-app bg-warning" [ngClass]="{'no' : reportMode, '' : !reportMode}"
+                    type='button' (click)="prepareToAddRecord()">
                     <i class="fas fa-plus"></i> Adicionar lançamento
                 </button>
             </div>
+
+
+
         </div>
     </form>
         <br />
@@ -59,7 +94,8 @@
                             <th>Subcategoria</th>
                             <th>Descrição</th>
                             <th>Valor</th>
-                            <th></th>
+                            <th>Projeto</th>
+                            <th *ngIf="!reportMode"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -71,7 +107,8 @@
                             <td>{{ record.subcategoryName }}</td>
                             <td>{{ record.description }}</td>
                             <td [ngClass]="{fontRed: record.categoryType === 'D', fontGreen: record.categoryType === 'C'}">{{ record.value | currency:'BRL':true }}</td>
-                            <td>
+                            <td>{{ record.projectName }}</td>
+                            <td *ngIf="!reportMode">
                                 <div class="btn-group">
                                     <button class="btn btn-primary" (click)="editRecord(record.id)">
                                         <i class="fas fa-pencil-alt"></i>
@@ -94,7 +131,7 @@
         <div class="row">
             <div class="form-group col-md-4">
 
-                <button type="button" class="btn btn-danger ml-1" (click)="backtoList()">
+                <button type="button" class="btn btn-danger ml-1" (click)="backtoList()" *ngIf="!reportMode">
                     <i class="fa fa-arrow-alt-circle-left"></i>Voltar
                 </button>
             </div>

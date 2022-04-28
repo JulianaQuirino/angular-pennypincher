@@ -1,8 +1,9 @@
+<div class="container" id="dailyrecords-list-pdf">
+
 <h1 class="mt-4">Lançamentos</h1>
 <ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item active">Consulta</li>
+    <li class="breadcrumb-item active" *ngIf="!reportMode">Consulta</li>
 </ol>
-<div class="container">
 
     <div class="row">
         <div class="col-md-12">
@@ -16,12 +17,37 @@
     </div>
 
     <div class="row">
-        <div class="col-md-2">
-            <button class="btn btn-warning" (click)="new()">
-                <i class="fa fa-plus"></i>Novo
-            </button>
+        <div class="col-md-4">
+            <div class="btn-group">
+                <button class="btn btn-warning" (click)="new()" [ngClass]="{'no' : reportMode, '' : !reportMode}">
+                    <i class="fa fa-plus"></i>Novo
+                </button>
+
+                <button class="btn btn-success" id="reports" [ngClass]="{'no' : reportMode, '' : !reportMode}" 
+                    (click)="printReports()" title="Imprimir relatórios">
+                    <i class="fa fa-solid fa-file-download"></i>
+                </button>
+
+                <button class="btn btn-warning" id="back" [ngClass]="{'no' : !reportMode, '' : reportMode}" 
+                    (click)="allOptions()" title="Voltar">
+                    <i class="fa fa-solid fa-backward"></i>
+                </button>
+
+                <button class="btn btn-success" id="exportExcel" [ngClass]="{'no' : !reportMode, '' : reportMode}" 
+                    (click)="exportExcel()" title="Download relatório em Excel">
+                    <i class="fa fa-solid fa-file-excel"></i>
+                </button>
+
+                <button class="btn btn-danger" id="exportPDF" [ngClass]="{'no' : !reportMode, '' : reportMode}" 
+                    (click)="exportToPDF('dailyrecords-list-pdf', 'Lançamentos')" title="Download relatório em PDF">
+                    <i class="fa fa-solid fa-file-pdf"></i>
+                </button>
+
+            </div>
         </div>
     </div>
+
+
     <br />
     <div class="row">
         <div class="col-md-12">
@@ -32,7 +58,7 @@
                         <th>Data</th>
                         <th>Débitos</th>
                         <th>Créditos</th>
-                        <th></th>
+                        <th *ngIf="!reportMode"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,7 +67,7 @@
                         <td>{{ dailyRecord.date }}</td>
                         <td>{{ dailyRecord.debits | currency }}</td>
                         <td>{{ dailyRecord.credits | currency }}</td>
-                        <td>
+                        <td *ngIf="!reportMode">
                             <div class="btn-group">
                                 <button class="btn btn-primary" routerLink="/lancamentos/form/{{ dailyRecord.id }}">
                                     <i class="fas fa-pencil-alt"></i>

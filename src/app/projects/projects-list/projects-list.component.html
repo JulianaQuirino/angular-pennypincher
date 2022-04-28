@@ -1,8 +1,8 @@
-<h1 class="mt-4">Projetos</h1>
-<ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item active">Consulta</li>
-</ol>
-<div class="container">
+<div class="container" id="projects-list-pdf">
+    <h1 class="mt-4">Projetos</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active" *ngIf="!reportMode">Consulta</li>
+    </ol>
 
     <div class="row">
         <div class="col-md-12">
@@ -16,13 +16,37 @@
     </div>
 
     <div class="row">
-        <div class="col-md-2">
-            <button class="btn btn-warning" (click)="new()">
-                <i class="fa fa-plus"></i>Novo
-            </button>
+        <div class="col-md-4">
+            <div class="btn-group">
+                <button class="btn btn-warning" (click)="new()" [ngClass]="{'no' : reportMode, '' : !reportMode}">
+                    <i class="fa fa-plus"></i>Novo
+                </button>
+
+                <button class="btn btn-success" id="reports" [ngClass]="{'no' : reportMode, '' : !reportMode}" 
+                    (click)="printReports()" title="Imprimir relatórios">
+                    <i class="fa fa-solid fa-file-download"></i>
+                </button>
+
+                <button class="btn btn-warning" id="back" [ngClass]="{'no' : !reportMode, '' : reportMode}" 
+                    (click)="allOptions()" title="Voltar">
+                    <i class="fa fa-solid fa-backward"></i>
+                </button>
+
+                <button class="btn btn-success" id="exportExcel" [ngClass]="{'no' : !reportMode, '' : reportMode}" 
+                    (click)="exportExcel()" title="Download relatório em Excel">
+                    <i class="fa fa-solid fa-file-excel"></i>
+                </button>
+
+                <button class="btn btn-danger" id="exportPDF" [ngClass]="{'no' : !reportMode, '' : reportMode}" 
+                    (click)="exportToPDF('projects-list-pdf', 'Projetos')" title="Download relatório em PDF">
+                    <i class="fa fa-solid fa-file-pdf"></i>
+                </button>
+
+            </div>
         </div>
     </div>
-    <br/>
+
+    <br />
     <div class="row">
         <div class="col-md-12">
             <table class="table table-condensed table-hover">
@@ -31,8 +55,7 @@
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Descrição</th>
-                        <th></th>
-                        <th></th>
+                        <th *ngIf="!reportMode"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,18 +63,17 @@
                         <td>{{ project.id }}</td>
                         <td>{{ project.name }}</td>
                         <td>{{ project.description }}</td>
-                        <td>
+                        <td *ngIf="!reportMode">
                             <div class="btn-group">
-                            <button class="btn btn-primary"
-                                routerLink="/projetos/form/{{ project.id }}">
-                                <i class="fas fa-pencil-alt"></i>
-                            </button>
-                        
-                            <button class="btn btn-danger" (click)="prepareToDelete(project)"
-                                data-toggle="modal" data-target="#deleteModal">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </div>
+                                <button class="btn btn-primary" routerLink="/projetos/form/{{ project.id }}">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+
+                                <button class="btn btn-danger" (click)="prepareToDelete(project)" data-toggle="modal"
+                                    data-target="#deleteModal">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>

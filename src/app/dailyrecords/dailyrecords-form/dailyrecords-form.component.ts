@@ -16,7 +16,9 @@ import { Project } from 'src/app/projects/project';
 import { ProjectsService } from 'src/app/shared/services/projects.service';
 import { RecordsService } from 'src/app/shared/services/records.service';
 import { RecordList } from '../recordList';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
+import { DownloadPDFService } from 'src/app/shared/services/download-pdf.service';
+import { DownloadExcelService } from 'src/app/shared/services/download-excel.service';
 
 declare var $: any;
 
@@ -59,6 +61,7 @@ export class DailyrecordsFormComponent implements OnInit {
   // Messages
   success: boolean = false;
   errors: String[];
+  reportMode : boolean = false;
 
   constructor(private service: DailyRecordsService,
     private recordService: RecordsService,
@@ -67,6 +70,8 @@ export class DailyrecordsFormComponent implements OnInit {
     private categoryService: CategoriesService,
     private subcategoryService: SubcategoriesService,
     private projectService: ProjectsService,
+    private downloadPDFService: DownloadPDFService,
+    private downloadExcelService: DownloadExcelService,
     private router: Router,
     private activatedRoute: ActivatedRoute) {
     this.dailyRecord = new DailyRecord();
@@ -279,6 +284,24 @@ export class DailyrecordsFormComponent implements OnInit {
           this.errors = errorResponse.error.errors;
         })
     }
+  }
+
+  public exportExcel(){
+    var date = this.dailyRecord.date;
+    let header=["ID","Conta", "Categoria", "Tipo", "Subcategoria", "Valor", "Descrição", "Projeto"];
+    this.downloadExcelService.exportExcel(this.records, header, "Lançamentos_" + date.replace('//', "_"), 8);
+  }
+
+  public printReports() {
+    this.reportMode = true; 
+  }
+
+  public allOptions() {
+    this.reportMode = false; 
+  }
+
+  public exportToPDF(elementId: string, fileName: string){
+    this.downloadPDFService.exportToPDF(elementId, fileName);
   }
 
 

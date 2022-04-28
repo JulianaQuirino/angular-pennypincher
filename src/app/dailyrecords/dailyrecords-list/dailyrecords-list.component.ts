@@ -3,6 +3,8 @@ import { Router} from '@angular/router';
 
 import { DailyRecord } from '../dailyrecord';
 import { DailyRecordsService } from 'src/app/shared/services/dailyrecords.service';
+import { DownloadPDFService } from 'src/app/shared/services/download-pdf.service';
+import { DownloadExcelService } from 'src/app/shared/services/download-excel.service';
 
 @Component({
   selector: 'app-dailyrecords-list',
@@ -15,10 +17,11 @@ export class DailyrecordsListComponent implements OnInit {
   selectedDailyRecord : DailyRecord;
   successMessage: string;
   errorMessage: string;
+  reportMode : boolean = false;
 
 
-  constructor(private service : DailyRecordsService, 
-    private router: Router) { }
+  constructor(private service : DailyRecordsService, private downloadPDFService: DownloadPDFService,
+    private downloadExcelService: DownloadExcelService, private router: Router) { }
 
   new(){
     this.router.navigate(['/lancamentos/form']);
@@ -43,6 +46,24 @@ export class DailyrecordsListComponent implements OnInit {
       },
         erro => this.errorMessage = 'Ocorreu um erro ao deletar o lançamento.'
       )
+  }
+
+
+  public exportExcel(){
+    let header=["ID","Data", "Débitos", "Créditos"];
+    this.downloadExcelService.exportExcel(this.dailyRecords, header, "Lançamentos", 4);
+  }
+
+  public printReports() {
+    this.reportMode = true; 
+  }
+
+  public allOptions() {
+    this.reportMode = false; 
+  }
+
+  public exportToPDF(elementId: string, fileName: string){
+    this.downloadPDFService.exportToPDF(elementId, fileName);
   }
 
 

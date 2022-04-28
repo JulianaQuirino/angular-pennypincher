@@ -17,6 +17,8 @@ import { DailyrecordsFormComponent } from './dailyrecords/dailyrecords-form/dail
 import { UsersListComponent } from './users/users-list/users-list.component';
 import { UsersFormComponent } from './users/users-form/users-form.component';
 import { AdminGuard } from './admin.guard';
+import { LimitsListComponent } from './limits/limits-list/limits-list.component';
+import { LimitsFormComponent } from './limits/limits-form/limits-form.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -43,6 +45,10 @@ const routes: Routes = [
     { path: 'lancamentos/list', component: DailyrecordsListComponent, canActivate : [AuthGuard] },
     { path: 'lancamentos/form', component: DailyrecordsFormComponent, canActivate : [AuthGuard] },
     { path: 'lancamentos/form/:id', component: DailyrecordsFormComponent, canActivate : [AuthGuard] },
+    { path: 'limites', component: LimitsListComponent, canActivate : [AuthGuard] },
+    { path: 'limites/list', component: LimitsListComponent, canActivate : [AuthGuard] },
+    { path: 'limites/form', component: LimitsFormComponent, canActivate : [AuthGuard] },
+    { path: 'limites/form/:id', component: LimitsFormComponent, canActivate : [AuthGuard] },
     { path: 'usuarios', component: UsersListComponent, canActivate : [AuthGuard] },
     { path: 'usuarios/list', component: UsersListComponent, canActivate : [AuthGuard] },
     { path: 'usuarios/form', component:UsersFormComponent, canActivate : [AuthGuard] },

@@ -1,56 +1,56 @@
 import { Component, OnInit } from '@angular/core';
 import { Router} from '@angular/router';
 
-import { Category } from '../category';
-import { CategoriesService } from 'src/app/shared/services/categories.service';
+import { LimitsService } from 'src/app/shared/services/limits.service';
 import { DownloadPDFService } from 'src/app/shared/services/download-pdf.service';
 import { DownloadExcelService } from 'src/app/shared/services/download-excel.service';
+import { LimitListItem } from '../limitListItem';
 
 @Component({
-  selector: 'app-categories-list',
-  templateUrl: './categories-list.component.html',
-  styleUrls: ['./categories-list.component.css']
+  selector: 'app-limits-list',
+  templateUrl: './limits-list.component.html',
+  styleUrls: ['./limits-list.component.css']
 })
-export class CategoriesListComponent implements OnInit {
+export class LimitsListComponent implements OnInit {
 
-  categories : Category[] = [];
-  selectedCategory : Category;
+  limits : LimitListItem[] = [];
+  selectedLimit : LimitListItem;
   successMessage: string;
   errorMessage: string;
   reportMode : boolean = false;
 
 
-  constructor(private service : CategoriesService, private downloadPDFService: DownloadPDFService,
+  constructor(private service : LimitsService, private downloadPDFService: DownloadPDFService,
     private downloadExcelService: DownloadExcelService, private router: Router) { }
 
   new(){
-    this.router.navigate(['/categorias/form']);
+    this.router.navigate(['/limites/form']);
   }
 
   ngOnInit(): void {
     this.service
-    .getCategories()
-    .subscribe( response => this.categories = response);
+    .getLimits()
+    .subscribe( response => this.limits = response);
   }
 
-  prepareToDelete( category:Category ) {
-    this.selectedCategory = category;
+  prepareToDelete( limit:LimitListItem ) {
+    this.selectedLimit = limit;
   }
 
-  deleteCategory(){
+  deleteLimit(){
     this.service
-      .delete(this.selectedCategory)
+      .delete(this.selectedLimit)
       .subscribe(
         response => {this.successMessage = 'Categoria deletada com sucesso!',
         this.ngOnInit();
       },
-        erro => this.errorMessage = 'Ocorreu um erro ao deletar a categoria.'
+        erro => this.errorMessage = 'Ocorreu um erro ao deletar o limite.'
       )
   }
 
   public exportExcel(){
-    let header=["ID","Nome", "Tipo"];
-    this.downloadExcelService.exportExcel(this.categories, header, "Categorias", 3);
+    let header=["ID", "Categoria", "Valor máximo", "Mês", "Ano", ];
+    this.downloadExcelService.exportExcel(this.limits, header, "Limites", 5);
   }
 
   public printReports() {

@@ -10220,3 +10220,21 @@ body {
  .fontGreen {
   color: green;
  }
+
+ .pos-left {
+  position: absolute;
+  right: 20px;
+}
+
+.pos-left-bottom {
+  position: absolute;
+  right: 20px;
+}
+
+.no {
+  display: none !important;
+}
+
+.showElement {
+  display:block;
+}
