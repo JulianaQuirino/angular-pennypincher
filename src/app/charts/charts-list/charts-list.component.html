@@ -1,0 +1,100 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<div class="container">
+    <h1 class="mt-4">Gráficos</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Consulta</li>
+    </ol>
+
+    <div class="row">
+        <div class="form-group col-md-8">
+            <label>Tipo de gráfico: *</label>
+            <select class="form-control" name="chartType" [(ngModel)]="chartType">
+                <option value="1">Categorias por mês, ano e tipo</option>
+                <option value="2">Gastos por projeto</option>
+                <option value="3">Metas a atingir</option>
+                <option value="4">Saldos das contas</option>
+                <option value="5">Quantidade de lançamentos</option>
+            </select>
+        </div>
+    </div>
+
+    <div [class]="chartType == 1 ? 'row' : 'row no'">
+
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Tipo: *</label>
+                <select class="form-control" name="categoryType" [(ngModel)]="categoryType">
+                    <option value="D">Débito</option>
+                    <option value="C">Crédito</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label>Mês: *</label>
+            <select class="form-control" name="month" [(ngModel)]="month">
+                <option value="1">Janeiro</option>
+                <option value="2">Fevereiro</option>
+                <option value="3">Março</option>
+                <option value="4">Abril</option>
+                <option value="5">Maio</option>
+                <option value="6">Junho</option>
+                <option value="7">Julho</option>
+                <option value="8">Agosto</option>
+                <option value="9">Setembro</option>
+                <option value="10">Outubro</option>
+                <option value="11">Novembro</option>
+                <option value="12">Dezembro</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-2">
+            <label>Ano: *</label>
+            <select class="form-control" name="year" [(ngModel)]="year">
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2024">2025</option>
+                <option value="2024">2026</option>
+            </select>
+        </div>
+
+
+        <div class="form-group col-md-1">
+            <button class="btn btn-success" id="search" (click)="loadChartCategories()" title="Filtrar">
+                Filtrar
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+
+    <div [class]="chartType == 2 ? 'row' : 'row no'">
+
+        <div class="form-group col-md-7">
+            <label>Projeto:</label>
+            <select class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="projectId">
+                <option *ngFor="let project of projects" [ngValue]="project.id">
+                    {{ project.name }}
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-1">
+            <button class="btn btn-success" id="search" (click)="loadChartProjects()" title="Filtrar">
+                Filtrar
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+
+    </div>
+
+
+    <div id="divChart" [class]="myChart ? 'row' : 'row no'">
+        <div class="form-group col-md-8">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+
+</div>

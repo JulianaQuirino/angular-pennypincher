@@ -1,0 +1,106 @@
+<div class="container" id="goals-list-pdf">
+    <h1 class="mt-4">Metas</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active" *ngIf="!reportMode">Consulta</li>
+    </ol>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert" *ngIf="successMessage">
+                {{ successMessage }}
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+                {{ errorMessage }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="btn-group">
+                <button class="btn btn-warning" (click)="new()" [ngClass]="{'no' : reportMode, '' : !reportMode}">
+                    <i class="fa fa-plus"></i>Novo
+                </button>
+
+                <button class="btn btn-success" id="reports" [ngClass]="{'no' : reportMode, '' : !reportMode}" 
+                    (click)="printReports()" title="Imprimir relatórios">
+                    <i class="fa fa-solid fa-file-download"></i>
+                </button>
+
+                <button class="btn btn-warning" id="back" [ngClass]="{'no' : !reportMode, '' : reportMode}" 
+                    (click)="allOptions()" title="Voltar">
+                    <i class="fa fa-solid fa-backward"></i>
+                </button>
+
+                <button class="btn btn-success" id="exportExcel" [ngClass]="{'no' : !reportMode, '' : reportMode}" 
+                    (click)="exportExcel()" title="Download relatório em Excel">
+                    <i class="fa fa-solid fa-file-excel"></i>
+                </button>
+
+                <button class="btn btn-danger" id="exportPDF" [ngClass]="{'no' : !reportMode, '' : reportMode}" 
+                    (click)="exportToPDF('goals-list-pdf', 'Metas')" title="Download relatório em PDF">
+                    <i class="fa fa-solid fa-file-pdf"></i>
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th *ngIf="!reportMode"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let goal of goals'>
+                        <td>{{ goal.id }}</td>
+                        <td>{{ goal.name }}</td>
+                        <td>{{ goal.value | currency }}</td>
+                        <td *ngIf="!reportMode">
+                            <div class="btn-group">
+                                <button class="btn btn-primary" routerLink="/metas/form/{{ goal.id }}">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+
+                                <button class="btn btn-danger" (click)="prepareToDelete(goal)" data-toggle="modal"
+                                    data-target="#deleteModal">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+    <div id="deleteModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Confirmação</h4>
+                </div>
+
+                <div class="modal-body" *ngIf="selectedGoal">
+                    Confirma a deleção da meta {{ selectedGoal.name }}?
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-success" (click)="deleteGoal()" data-dismiss="modal">Confirmar</button>
+                    <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

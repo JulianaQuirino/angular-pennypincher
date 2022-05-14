@@ -33,6 +33,13 @@ import { UsersListComponent } from './users/users-list/users-list.component';
 import { UsersFormComponent } from './users/users-form/users-form.component';
 import { AuthGuard } from './auth.guard';
 import { AdminGuard } from './admin.guard';
+import { GoalsFormComponent } from './goals/goals-form/goals-form.component';
+import { GoalsListComponent } from './goals/goals-list/goals-list.component';
+import { MoneytransfersListComponent } from './moneytransfers/moneytransfers-list/moneytransfers-list.component';
+import { MoneytransfersFormComponent } from './moneytransfers/moneytransfers-form/moneytransfers-form.component';
+import { ChartsFormComponent } from './charts/charts-form/charts-form.component';
+import { ChartsListComponent } from './charts/charts-list/charts-list.component';
+
 
 registerLocaleData(localePt, 'pt');
 
@@ -55,7 +62,13 @@ registerLocaleData(localePt, 'pt');
     UsersListComponent,
     UsersFormComponent,
     LimitsFormComponent,
-    LimitsListComponent
+    LimitsListComponent,
+    GoalsFormComponent,
+    GoalsListComponent,
+    MoneytransfersListComponent,
+    MoneytransfersFormComponent,
+    ChartsFormComponent,
+    ChartsListComponent
   ],
   imports: [
     BrowserModule,

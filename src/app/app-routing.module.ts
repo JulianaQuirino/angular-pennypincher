@@ -16,9 +16,13 @@ import { DailyrecordsListComponent } from './dailyrecords/dailyrecords-list/dail
 import { DailyrecordsFormComponent } from './dailyrecords/dailyrecords-form/dailyrecords-form.component';
 import { UsersListComponent } from './users/users-list/users-list.component';
 import { UsersFormComponent } from './users/users-form/users-form.component';
-import { AdminGuard } from './admin.guard';
 import { LimitsListComponent } from './limits/limits-list/limits-list.component';
 import { LimitsFormComponent } from './limits/limits-form/limits-form.component';
+import { GoalsListComponent } from './goals/goals-list/goals-list.component';
+import { GoalsFormComponent } from './goals/goals-form/goals-form.component';
+import { MoneytransfersListComponent } from './moneytransfers/moneytransfers-list/moneytransfers-list.component';
+import { MoneytransfersFormComponent } from './moneytransfers/moneytransfers-form/moneytransfers-form.component';
+import { ChartsListComponent } from './charts/charts-list/charts-list.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -49,10 +53,21 @@ const routes: Routes = [
     { path: 'limites/list', component: LimitsListComponent, canActivate : [AuthGuard] },
     { path: 'limites/form', component: LimitsFormComponent, canActivate : [AuthGuard] },
     { path: 'limites/form/:id', component: LimitsFormComponent, canActivate : [AuthGuard] },
+    { path: 'metas', component: GoalsListComponent, canActivate : [AuthGuard] },
+    { path: 'metas/list', component: GoalsListComponent, canActivate : [AuthGuard] },
+    { path: 'metas/form', component: GoalsFormComponent, canActivate : [AuthGuard] },
+    { path: 'metas/form/:id', component: GoalsFormComponent, canActivate : [AuthGuard] },
+    { path: 'transferencias', component: MoneytransfersListComponent, canActivate : [AuthGuard] },
+    { path: 'transferencias/list', component: MoneytransfersListComponent, canActivate : [AuthGuard] },
+    { path: 'transferencias/form', component: MoneytransfersFormComponent, canActivate : [AuthGuard] },
+    { path: 'transferencias/form/:id', component: MoneytransfersFormComponent, canActivate : [AuthGuard] },
+    { path: 'graficos', component: ChartsListComponent, canActivate : [AuthGuard] },
+    { path: 'graficos/list', component: ChartsListComponent, canActivate : [AuthGuard] },
     { path: 'usuarios', component: UsersListComponent, canActivate : [AuthGuard] },
     { path: 'usuarios/list', component: UsersListComponent, canActivate : [AuthGuard] },
     { path: 'usuarios/form', component:UsersFormComponent, canActivate : [AuthGuard] },
     { path: 'usuarios/form/:id', component: UsersFormComponent, canActivate : [AuthGuard] },
+
     
   ] }
 ];

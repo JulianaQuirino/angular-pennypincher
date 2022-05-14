@@ -1,0 +1,114 @@
+<h1 class="mt-4">Transferências</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">{{ moneytransfer.id ? 'Edição' : 'Cadastro' }}</li>
+</ol>
+<div class="container">
+
+    <form #moneytransferForm="ngForm" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert" *ngIf="success == true">
+                    Transferência salva/atualizada com sucesso!
+                </div>
+                <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                    {{ erro }}
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="moneytransfer.id">
+                    Não é possível corrigir transferências. Favor excluir e lançar uma nova, se necessário.
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6" *ngIf="moneytransfer.id">
+                <div class="form-group">
+                    <label>ID:</label>
+                    <input type="text" class="form-control" disabled="true" name="id" [ngModel]="moneytransfer.id" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Data: *</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                        </div>
+                        <input type="text" class="form-control" name="name" [(ngModel)]="moneytransfer.date"
+                            *ngIf="!moneytransfer.id" />
+                        <label class="form-control" *ngIf="moneytransfer.id">{{moneytransfer.date}}</label>
+                    </div>
+                </div>
+            </div>
+
+         
+                <div class="form-group col-md-3">
+                    <label>Valor: *</label>
+                    <input type="text" class="form-control" name="value" [(ngModel)]="moneytransfer.value" />
+                </div>
+     
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label>Conta débito: *</label>
+                <select class="form-control" [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="moneytransfer.debitAccountId">
+                    <option value="">Selecione...</option>
+                    <option *ngFor="let account of debitAccounts" [ngValue]="account.id">
+                        {{ account.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label>Conta crédito: *</label>
+                <select class="form-control" [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="moneytransfer.creditAccountId">
+                    <option value="">Selecione...</option>
+                    <option *ngFor="let account of creditAccounts" [ngValue]="account.id">
+                        {{ account.name }}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Descrição: *</label>
+                    <input type="text" class="form-control" name="name" [(ngModel)]="moneytransfer.description" />
+                </div>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label>Meta: </label>
+                <select class="form-control" [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="moneytransfer.goalId">
+                    <option value="">Selecione...</option>
+                    <option *ngFor="let goal of goals" [ngValue]="goal.id">
+                        {{ goal.name }}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <button type="submit" class="btn btn-success" *ngIf="!moneytransfer.id">
+                    <i class="fa fa-save"></i>Salvar
+                </button>
+
+                <button type="button" class="btn btn-danger ml-1" (click)="backtoList()">
+                    <i class="fa fa-arrow-alt-circle-left"></i>Voltar
+                </button>
+            </div>
+        </div>
+
+
+    </form>
+
+</div>
