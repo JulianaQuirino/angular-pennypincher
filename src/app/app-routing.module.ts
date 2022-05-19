@@ -23,6 +23,7 @@ import { GoalsFormComponent } from './goals/goals-form/goals-form.component';
 import { MoneytransfersListComponent } from './moneytransfers/moneytransfers-list/moneytransfers-list.component';
 import { MoneytransfersFormComponent } from './moneytransfers/moneytransfers-form/moneytransfers-form.component';
 import { ChartsListComponent } from './charts/charts-list/charts-list.component';
+import { ReportsListComponent } from './reports/reports-list/reports-list.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -63,6 +64,8 @@ const routes: Routes = [
     { path: 'transferencias/form/:id', component: MoneytransfersFormComponent, canActivate : [AuthGuard] },
     { path: 'graficos', component: ChartsListComponent, canActivate : [AuthGuard] },
     { path: 'graficos/list', component: ChartsListComponent, canActivate : [AuthGuard] },
+    { path: 'relatorios', component: ReportsListComponent, canActivate : [AuthGuard] },
+    { path: 'relatorios/list', component: ReportsListComponent, canActivate : [AuthGuard] },
     { path: 'usuarios', component: UsersListComponent, canActivate : [AuthGuard] },
     { path: 'usuarios/list', component: UsersListComponent, canActivate : [AuthGuard] },
     { path: 'usuarios/form', component:UsersFormComponent, canActivate : [AuthGuard] },

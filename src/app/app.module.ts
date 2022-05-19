@@ -37,8 +37,8 @@ import { GoalsFormComponent } from './goals/goals-form/goals-form.component';
 import { GoalsListComponent } from './goals/goals-list/goals-list.component';
 import { MoneytransfersListComponent } from './moneytransfers/moneytransfers-list/moneytransfers-list.component';
 import { MoneytransfersFormComponent } from './moneytransfers/moneytransfers-form/moneytransfers-form.component';
-import { ChartsFormComponent } from './charts/charts-form/charts-form.component';
 import { ChartsListComponent } from './charts/charts-list/charts-list.component';
+import { ReportsListComponent } from './reports/reports-list/reports-list.component';
 
 
 registerLocaleData(localePt, 'pt');
@@ -67,8 +67,8 @@ registerLocaleData(localePt, 'pt');
     GoalsListComponent,
     MoneytransfersListComponent,
     MoneytransfersFormComponent,
-    ChartsFormComponent,
-    ChartsListComponent
+    ChartsListComponent,
+    ReportsListComponent
   ],
   imports: [
     BrowserModule,
